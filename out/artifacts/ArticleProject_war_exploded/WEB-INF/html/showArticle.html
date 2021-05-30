@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="../css/article.css" rel="stylesheet" type="text/css"/>
+    <script src="../js/jquery-2.2.0.min.js"></script>
+    <script src="../js/jsonData.js"></script>
+    <title>显示文章</title>
+</head>
+<body  class="/aritcle/getAllArticle">
+    <!--<form id="query" name="query" method="get" >-->
+    搜索框：<input id="condition" type="text" placeholder="输入回车搜索" onkeydown="summit()"/>
+     <select  id="field" onchange="this.parentNode.nextSibling.value=this.value">
+         <option value="ARTICLE_ID">文章序号</option>
+         <option value="TITLE">标题</option>
+         <option value="PULISH_DATE">出版时间</option>
+         <option value="ARTICLE_TYPE">文章类型</option>
+         <option value="AUTHOR_NAME">作者名字</option>
+         <option value="SOURCE_NAME">来源放</option>
+     </select>
+    <!--</form>-->
+    <br/><br/>
+    <div id="dataTable"  >
+    </div>
+</body>
+<script>
+    function summit()
+    {
+        if(event.keyCode==13)
+        {
+            var field=$("#field").val();
+            var condition=$("#condition").val();
+            $.ajax(
+                    {
+                        url:"/aritcle/queryCondition",
+                        type:"get",
+                        dataType:'json',
+                        data:"field="+field+"&condition="+condition,
+                        success: function (data) {
+                            console.log(data);
+                            createShowingTable(data);
+                           // refresh_date.onload;
+                        },
+                        error: function () {
+                            alert("选择条件查询有误")
+                        }
+                    }
+            );
+        }
+    }
+</script>
+</html>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.scau.beyondboy.dao.AritcleMapper" >
+  <resultMap id="BaseResultMap" type="com.scau.beyondboy.model.Aritcle" >
+    <id column="ARTICLE_ID" property="articleId" jdbcType="DECIMAL" />
+    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+    <result column="PULISH_DATE" property="pulishDate" jdbcType="DATE" />
+    <result column="ARTICLE_TYPE" property="articleType" jdbcType="VARCHAR" />
+    <result column="AUTHOR_NAME" property="authorName" jdbcType="VARCHAR" />
+    <result column="SOURCE_NAME" property="sourceName" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="GroudAritcle" type="com.scau.beyondboy.model.GroudAritcle">
+    <id column="TITLE" property="title" jdbcType="VARCHAR"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ARTICLE_ID, TITLE, PULISH_DATE, ARTICLE_TYPE, AUTHOR_NAME, SOURCE_NAME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ARTICLE
+    where ARTICLE_ID = #{articleId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ARTICLE
+    where ARTICLE_ID = #{articleId,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.scau.beyondboy.model.Aritcle" >
+    insert into ARTICLE (ARTICLE_ID, TITLE, PULISH_DATE, 
+      ARTICLE_TYPE, AUTHOR_NAME, SOURCE_NAME
+      )
+    values (#{articleId,jdbcType=DECIMAL}, #{title,jdbcType=VARCHAR}, #{pulishDate,jdbcType=DATE}, 
+      #{articleType,jdbcType=VARCHAR}, #{authorName,jdbcType=VARCHAR}, #{sourceName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.scau.beyondboy.model.Aritcle" >
+    insert into ARTICLE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="articleId != null" >
+        ARTICLE_ID,
+      </if>
+      <if test="title != null" >
+        TITLE,
+      </if>
+      <if test="pulishDate != null" >
+        PULISH_DATE,
+      </if>
+      <if test="articleType != null" >
+        ARTICLE_TYPE,
+      </if>
+      <if test="authorName != null" >
+        AUTHOR_NAME,
+      </if>
+      <if test="sourceName != null" >
+        SOURCE_NAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="articleId != null" >
+        #{articleId,jdbcType=DECIMAL},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="pulishDate != null" >
+        #{pulishDate,jdbcType=DATE},
+      </if>
+      <if test="articleType != null" >
+        #{articleType,jdbcType=VARCHAR},
+      </if>
+      <if test="authorName != null" >
+        #{authorName,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceName != null" >
+        #{sourceName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="getLimitFind"  resultMap="BaseResultMap">
+    <if test="start>0 and end>0">
+      SELECT * FROM (SELECT A.*,ROWNUM rn FROM (SELECT * FROM ARTICLE) A WHERE ${end}>=ROWNUM)where rn>=${start}
+    </if>
+  </select>
+  <select id="getAll" resultMap="BaseResultMap">
+    SELECT * FROM ARTICLE
+  </select>
+  <select id="getCount" resultType="integer">
+    SELECT  rowNum(*) FROM ARTICLE GROUP BY TITLE
+  </select>
+  <select id="getGroudBy" resultType="com.scau.beyondboy.model.GroudAritcle">
+    SELECT count(*) as "rowNum",AUTHOR_NAME,TITLE FROM ARTICLE GROUP BY AUTHOR_NAME,TITLE
+  </select>
+  <select id="queryByCdn" resultMap="BaseResultMap">
+    SELECT * FROM ARTICLE
+    <where>
+      <if test="field!=null and condition!=null">
+        ${field}='${condition}'
+      </if>
+    </where>
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.scau.beyondboy.model.Aritcle" >
+    update ARTICLE
+    <set >
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="pulishDate != null" >
+        PULISH_DATE = #{pulishDate,jdbcType=DATE},
+      </if>
+      <if test="articleType != null" >
+        ARTICLE_TYPE = #{articleType,jdbcType=VARCHAR},
+      </if>
+      <if test="authorName != null" >
+        AUTHOR_NAME = #{authorName,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceName != null" >
+        SOURCE_NAME = #{sourceName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ARTICLE_ID = #{articleId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.scau.beyondboy.model.Aritcle" >
+    update ARTICLE
+    set TITLE = #{title,jdbcType=VARCHAR},
+      PULISH_DATE = #{pulishDate,jdbcType=DATE},
+      ARTICLE_TYPE = #{articleType,jdbcType=VARCHAR},
+      AUTHOR_NAME = #{authorName,jdbcType=VARCHAR},
+      SOURCE_NAME = #{sourceName,jdbcType=VARCHAR}
+    where ARTICLE_ID = #{articleId,jdbcType=DECIMAL}
+  </update>
+</mapper>

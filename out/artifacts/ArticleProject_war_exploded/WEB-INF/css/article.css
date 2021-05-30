@@ -1,0 +1,36 @@
+.In-table {
+    width: 80%;
+    height: 100%;
+    border: 1px solid #111;
+    text-align: center!important;
+    margin:0 auto;
+}
+/*div#container*/
+/*{*/
+    /*align-content: center;*/
+    /*text-align: center;*/
+    /*margin:0 auto;*/
+/*}*/
+body
+{
+    align-content: center;
+    text-align: center!important;
+    margin:0 auto;
+}
+/*div#dataTable,form#query
+{
+    align-content: center;
+    text-align: center!important;
+    margin:0 auto;
+}*/
+#div-button {
+    margin-bottom: 5px;
+}
+
+#div-button input {
+    color: #fff;
+    border: 1px solid #9cf;
+    box-shadow: 2px 2px 3px #ccc;
+    border-radius: 5px;
+    background: #9cf;
+}

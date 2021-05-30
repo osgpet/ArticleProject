@@ -1,0 +1,42 @@
+
+.search-field .shadow-x{
+
+    position:absolute;
+
+    top:0;
+
+    left:1px;
+
+    width:438px;
+
+    height:0;
+
+    border-top:10px solid #d0d0d0;
+
+    border-bottom:1px solid #f0f0f0;
+
+    overflow:hidden;
+
+    z-index:1;
+
+}
+
+.search-field .shadow-y{
+
+    position:absolute;
+
+    top:0;
+
+    left:0;
+
+    width:0;
+
+    height:30px;
+
+    border-left:1px solid #d0d0d0;
+
+    border-right:1px solid #f0f0f0;
+
+    overflow:hidden;
+
+}
